@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext } from "react";
 import { createStore, applyMiddleware } from "redux";
 import ReactDOM from "react-dom";
 import "./index.css";
@@ -46,4 +46,22 @@ const store = createStore(rootReducer, applyMiddleware(logger, thunk));
 // });
 // console.log("After State", store.getState());
 
-ReactDOM.render(<App store={store} />, document.getElementById("root"));
+export const StoreContext = createContext();
+class Provider extends React.Component {
+  render() {
+    const { store } = this.props;
+
+    return (
+      <StoreContext.Provider value={store}>
+        {this.props.children}
+      </StoreContext.Provider>
+    );
+  }
+}
+console.log("Store Context ", StoreContext);
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById("root")
+);
