@@ -10,7 +10,7 @@
  > React and Redux have been used to pass the state to Components from manual implementation to scratch
  
  ###### link
- @clikck here :+1: [VISIT THIS LINK](https://atulraj151.github.io/movie-app/)
+  click here :+1: [VISIT THIS LINK](https://atulraj151.github.io/movie-app/)
  
  
 
