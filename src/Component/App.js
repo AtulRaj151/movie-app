@@ -4,20 +4,21 @@ import Navbar from "./Navbar";
 import MovieCard from "./MovieCard";
 import { addMovies, setShowFavourites } from "../actions";
 import { StoreContext } from "..";
+import { connect } from "../index";
 class App extends React.Component {
   componentDidMount() {
     //make api call
     // dispatch action
-    const { store } = this.props;
-    store.subscribe(() => {
-      console.log("Updated");
-      this.forceUpdate();
-    });
-    store.dispatch(addMovies(data));
-    console.log(this.props.store.getState());
+    // const { store } = this.props;
+    // store.subscribe(() => {
+    //   // console.log("Updated");
+    //   this.forceUpdate();
+    // });
+    this.props.dispatch(addMovies(data));
+    // console.log(this.props.store.getState());
   }
   isFavouriteMovie = (movie) => {
-    const { movies } = this.props.store.getState();
+    const { movies } = this.props;
     const index = movies.favourite.indexOf(movie);
 
     if (index != -1) {
@@ -26,10 +27,10 @@ class App extends React.Component {
     return false;
   };
   changeTab = (val) => {
-    this.props.store.dispatch(setShowFavourites(val));
+    this.props.dispatch(setShowFavourites(val));
   };
   render() {
-    const { movies, search } = this.props.store.getState();
+    const { movies, search } = this.props;
     const { list, favourite, showFavourites } = movies;
     const displayMovies = showFavourites ? favourite : list;
 
@@ -57,7 +58,7 @@ class App extends React.Component {
               <MovieCard
                 movie={movie}
                 key={`movies-${index}`}
-                dispatch={this.props.store.dispatch}
+                dispatch={this.props.dispatch}
                 isFavourite={this.isFavouriteMovie(movie)}
               />
             ))}
@@ -80,4 +81,12 @@ class AppWrapper extends React.Component {
     );
   }
 }
-export default AppWrapper;
+
+function mapStateToProps(state) {
+  return {
+    movies: state.movies,
+    search: state.search,
+  };
+}
+const connectedAppCompement = connect(mapStateToProps)(App);
+export default connectedAppCompement;

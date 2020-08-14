@@ -2,6 +2,7 @@ import React from "react";
 import { addMovieToList, handleMovieSearch } from "../actions";
 import { StoreContext } from "..";
 // import { data } from "../data";
+import { connect } from "../index";
 
 class Navbar extends React.Component {
   constructor() {
@@ -55,15 +56,21 @@ class Navbar extends React.Component {
     );
   }
 }
-class NavbarWrapper extends React.Component {
-  render() {
-    return (
-      <StoreContext.Consumer>
-        {(store) => (
-          <Navbar dispatch={store.dispatch} search={this.props.search} />
-        )}
-      </StoreContext.Consumer>
-    );
-  }
+// class NavbarWrapper extends React.Component {
+//   render() {
+//     return (
+//       <StoreContext.Consumer>
+//         {(store) => (
+//           <Navbar dispatch={store.dispatch} search={this.props.search} />
+//         )}
+//       </StoreContext.Consumer>
+//     );
+//   }
+// }
+
+function mapStatetoProps({ search }) {
+  return {
+    search,
+  };
 }
-export default NavbarWrapper;
+export default connect(mapStatetoProps)(Navbar);
